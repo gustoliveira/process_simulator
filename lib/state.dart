@@ -64,6 +64,10 @@ class AppState {
     return process;
   }
 
+  void updateQuantum(int newQuantum) => systemQuantum = newQuantum;
+
+  void updateOverload(int newOverload) => systemOverload = newOverload;
+
   List<Process> wrongProcess() {
     List<Process> wrongProcess = [];
 

@@ -11,6 +11,18 @@ class HomePageHeader extends StatefulWidget {
 class _HomePageHeaderState extends State<HomePageHeader> {
   AppState appState = AppState();
 
+  TextEditingController quantumController = TextEditingController();
+  TextEditingController overloadController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+
+    quantumController.text = appState.systemQuantum.toString().padLeft(2, '0');
+    overloadController.text =
+        appState.systemOverload.toString().padLeft(2, '0');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -79,6 +91,10 @@ class _HomePageHeaderState extends State<HomePageHeader> {
       height: 50,
       padding: EdgeInsets.all(5),
       child: TextField(
+        controller: quantumController,
+        onChanged: (value) {
+          appState.updateQuantum(int.parse(value));
+        },
         decoration: InputDecoration(
           enabledBorder: OutlineInputBorder(
             borderSide: BorderSide(color: Colors.black),
@@ -102,6 +118,10 @@ class _HomePageHeaderState extends State<HomePageHeader> {
       height: 50,
       padding: EdgeInsets.all(5),
       child: TextField(
+        controller: overloadController,
+        onChanged: (value) {
+          appState.updateOverload(int.parse(value));
+        },
         decoration: InputDecoration(
           enabledBorder: OutlineInputBorder(
             borderSide: BorderSide(color: Colors.black),
