@@ -4,10 +4,10 @@ import 'package:simuladorprocessos/state.dart';
 import 'package:simuladorprocessos/utils/extensions.dart';
 
 class Fifo {
-  static Map<int, dynamic> calculate() {
+  static Map<String, ProcessTimes> calculate() {
     final AppState appState = AppState();
 
-    Map<int, dynamic> coordinates = {};
+    Map<String, ProcessTimes> times = {};
 
     List<Process> processes = []..addAll(appState.process);
 
@@ -42,6 +42,16 @@ class Fifo {
         (element) => element.id == process.id,
       );
 
+      List<Process> avaliableProcesses =
+          processes.where((p) => (p.arriveTime! <= time)).toList();
+
+      times = ProcessTimes.updateWaiting(
+        avaliableProcesses: avaliableProcesses,
+        times: times,
+        executing: process,
+        time: time,
+      );
+
       time++;
 
       if (remainExecution == 0) {
@@ -49,16 +59,9 @@ class Fifo {
         turnaround += fromArriveToComplete;
         processes.removeAt(0);
       }
-
-      coordinates[time] = Coordinates(
-        time,
-        {
-          process.id.toString(): ProcessStatus.executing,
-        },
-      );
     }
 
     appState.updateTurnAround(turnAroundFIFO: turnaround);
-    return coordinates;
+    return times;
   }
 }
