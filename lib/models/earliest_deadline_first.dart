@@ -3,7 +3,7 @@ import 'package:simuladorprocessos/state.dart';
 import 'package:simuladorprocessos/utils/extensions.dart';
 
 class EDF {
-  static calculate() {
+  static Map<String, dynamic> calculate() {
     final AppState appState = AppState();
 
     final int quantum = appState.systemQuantum;

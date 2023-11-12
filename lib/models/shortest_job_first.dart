@@ -2,7 +2,7 @@ import 'package:simuladorprocessos/models/process.dart';
 import 'package:simuladorprocessos/state.dart';
 
 class SJF {
-  static calculate() {
+  static Map<String, dynamic> calculate() {
     final AppState appState = AppState();
 
     Map<String, dynamic> coordinates = {};
@@ -55,8 +55,6 @@ class SJF {
     }
 
     appState.updateTurnAround(turnAroundSJF: turnaround);
-
-    appState.averageTurnAroundSJF;
     return coordinates;
   }
 }
