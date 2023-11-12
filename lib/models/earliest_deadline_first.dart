@@ -54,7 +54,7 @@ class EDF {
           return processB.compareTo(processA);
         });
 
-        times = ProcessTimes.updateWaiting(
+        times = ProcessTimes.updateTimes(
           avaliableProcesses: avaliableProcesses,
           times: times,
           executing: process,
@@ -80,7 +80,7 @@ class EDF {
         if (i != quantum) continue;
 
         if (remainExecution != 0) {
-          times = ProcessTimes.updateWaitingWithOverload(
+          times = ProcessTimes.updateTimes(
             avaliableProcesses: avaliableProcesses,
             times: times,
             executing: process,

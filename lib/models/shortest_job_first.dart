@@ -50,7 +50,7 @@ class SJF {
           return processB.compareTo(processA);
         });
 
-        times = ProcessTimes.updateWaiting(
+        times = ProcessTimes.updateTimes(
           avaliableProcesses: avaliableProcesses,
           times: times,
           executing: process,

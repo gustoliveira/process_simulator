@@ -45,7 +45,7 @@ class Fifo {
       List<Process> avaliableProcesses =
           processes.where((p) => (p.arriveTime! <= time)).toList();
 
-      times = ProcessTimes.updateWaiting(
+      times = ProcessTimes.updateTimes(
         avaliableProcesses: avaliableProcesses,
         times: times,
         executing: process,
