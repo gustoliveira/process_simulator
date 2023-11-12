@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:simuladorprocessos/models/fifo.dart';
 
 class HomePageBottom extends StatefulWidget {
   const HomePageBottom({super.key});
@@ -59,6 +60,7 @@ class _HomePageBottomState extends State<HomePageBottom> {
         ),
         child: InkWell(
           onTap: () {
+            Fifo.calculate();
             print('Called escalation $label');
           },
           child: Center(child: Text(label)),

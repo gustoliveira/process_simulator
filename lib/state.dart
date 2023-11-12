@@ -1,4 +1,3 @@
-// AppState singleton
 import 'package:simuladorprocessos/utils/extensions.dart';
 
 import 'models/process.dart';
@@ -13,9 +12,31 @@ class AppState {
   int systemQuantum = 1;
   List<Process> process = [];
 
+  int turnAroundFIFO = 0;
+  int turnAroundSJF = 0;
+  int turnAroundEDF = 0;
+  int turnAroundRR = 0;
+
   int? get _lastProcessId => process.lastOrNull?.id;
 
   int get processCounter => process.length;
+
+  double get averageTurnAroundFIFO => turnAroundFIFO / (process.length);
+  double get averageTurnAroundSJF => turnAroundSJF / (process.length);
+  double get averageTurnAroundEDF => turnAroundEDF / (process.length);
+  double get averageTurnAroundRR => turnAroundRR / (process.length);
+
+  void updateTurnAround({
+    int? turnAroundFIFO,
+    int? turnAroundSJF,
+    int? turnAroundEDF,
+    int? turnAroundRR,
+  }) {
+    this.turnAroundFIFO = turnAroundFIFO ?? this.turnAroundFIFO;
+    this.turnAroundSJF = turnAroundSJF ?? this.turnAroundSJF;
+    this.turnAroundEDF = turnAroundEDF ?? this.turnAroundEDF;
+    this.turnAroundRR = turnAroundRR ?? this.turnAroundRR;
+  }
 
   List<Process> removeProcess(int processId) {
     process.removeWhere((element) => element.id == processId);
