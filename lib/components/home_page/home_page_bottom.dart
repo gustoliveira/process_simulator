@@ -3,6 +3,7 @@ import 'package:simuladorprocessos/models/earliest_deadline_first.dart';
 import 'package:simuladorprocessos/models/fifo.dart';
 import 'package:simuladorprocessos/models/round_robin.dart';
 import 'package:simuladorprocessos/models/shortest_job_first.dart';
+import 'package:simuladorprocessos/state.dart';
 
 class HomePageBottom extends StatefulWidget {
   const HomePageBottom({super.key});
@@ -67,6 +68,12 @@ class _HomePageBottomState extends State<HomePageBottom> {
             SJF.calculate();
             EDF.calculate();
             RR.calculate();
+
+            AppState appState = AppState();
+            print('FIFO: ${appState.averageTurnAroundFIFO}');
+            print('SJF: ${appState.averageTurnAroundSJF}');
+            print('EDF: ${appState.averageTurnAroundEDF}');
+            print('RR: ${appState.averageTurnAroundRR}');
 
             print('Called escalation $label');
           },

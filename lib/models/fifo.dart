@@ -1,12 +1,13 @@
+import 'package:simuladorprocessos/models/coordinates.dart';
 import 'package:simuladorprocessos/models/process.dart';
 import 'package:simuladorprocessos/state.dart';
 import 'package:simuladorprocessos/utils/extensions.dart';
 
 class Fifo {
-  static Map<String, dynamic> calculate() {
+  static Map<int, dynamic> calculate() {
     final AppState appState = AppState();
 
-    Map<String, dynamic> coordinates = {};
+    Map<int, dynamic> coordinates = {};
 
     List<Process> processes = []..addAll(appState.process);
 
@@ -49,7 +50,12 @@ class Fifo {
         processes.removeAt(0);
       }
 
-      coordinates[time.toString()] = process.id;
+      coordinates[time] = Coordinates(
+        time,
+        {
+          process.id.toString(): ProcessStatus.executing,
+        },
+      );
     }
 
     appState.updateTurnAround(turnAroundFIFO: turnaround);

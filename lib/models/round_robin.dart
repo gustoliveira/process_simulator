@@ -26,10 +26,15 @@ class RR {
     while (true) {
       if (processes.isEmpty) break;
 
-      List<Process> teste = []..addAll(
+      List<Process> _availables = []..addAll(
           processes.where((p) => (p.arriveTime! <= time)),
         );
-      avaliableProcesses = teste;
+      avaliableProcesses = _availables;
+
+      if (avaliableProcesses.isEmpty) {
+        time++;
+        continue;
+      }
 
       Process process = avaliableProcesses.first;
       for (int i = 1; i <= quantum; i++) {

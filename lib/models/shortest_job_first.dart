@@ -32,6 +32,11 @@ class SJF {
         return processB.compareTo(processA);
       });
 
+      if (avaliableProcesses.isEmpty) {
+        time++;
+        continue;
+      }
+
       Process process = avaliableProcesses.first;
       while (true) {
         int remainExecution = (process.executionTime ?? 0) - 1;

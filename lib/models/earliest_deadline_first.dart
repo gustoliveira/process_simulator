@@ -35,6 +35,11 @@ class EDF {
         return processB.compareTo(processA);
       });
 
+      if (avaliableProcesses.isEmpty) {
+        time++;
+        continue;
+      }
+
       Process process = avaliableProcesses.first;
       for (int i = 1; i <= quantum; i++) {
         time++;
