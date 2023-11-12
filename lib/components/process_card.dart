@@ -1,13 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:simuladorprocessos/models/process.dart';
+import 'package:simuladorprocessos/state.dart';
 
 class ProcessCard extends StatefulWidget {
-  const ProcessCard({super.key});
+  final Process process;
+  final Function(int) removeProcessCallback;
+
+  const ProcessCard(
+    this.process, {
+    required this.removeProcessCallback,
+    super.key,
+  });
 
   @override
   State<ProcessCard> createState() => _ProcessCardState();
 }
 
 class _ProcessCardState extends State<ProcessCard> {
+  AppState appState = AppState();
+
+  String get processId => widget.process.id.toString().padLeft(2, '0');
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -37,7 +50,7 @@ class _ProcessCardState extends State<ProcessCard> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text('Processo 01'),
+          Text('Processo $processId'),
           iconButton(),
         ],
       ),
@@ -48,7 +61,11 @@ class _ProcessCardState extends State<ProcessCard> {
     return InkWell(
       child: Icon(Icons.delete),
       onTap: () {
-        print('Process deleted');
+        setState(() {
+          widget.removeProcessCallback.call(widget.process.id);
+          // appState.removeProcess(widget.process.id);
+          print('Process deleted');
+        });
       },
     );
   }

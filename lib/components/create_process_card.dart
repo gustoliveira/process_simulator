@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 
 class CreatePorcessCard extends StatefulWidget {
-  const CreatePorcessCard({super.key});
+  final Function createProcessCallback;
+
+  const CreatePorcessCard({
+    super.key,
+    required this.createProcessCallback,
+  });
 
   @override
   State<CreatePorcessCard> createState() => _CreatePorcessCardState();
@@ -13,6 +18,7 @@ class _CreatePorcessCardState extends State<CreatePorcessCard> {
     return InkWell(
       child: content(),
       onTap: () {
+        widget.createProcessCallback.call();
         print('Create new process');
       },
     );

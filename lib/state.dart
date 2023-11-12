@@ -20,8 +20,8 @@ class AppState {
     return process;
   }
 
-  List<Process> removeProcess(Process newProcess) {
-    process.remove(newProcess);
+  List<Process> removeProcess(int processId) {
+    process.removeWhere((element) => element.id == processId);
     return process;
   }
 
@@ -33,7 +33,7 @@ class AppState {
   }) {
     int newId = (_lastProcessId ?? 0) + 1;
 
-    process.remove(
+    process.add(
       Process(
         newId,
         arriveTime: arriveTime,
