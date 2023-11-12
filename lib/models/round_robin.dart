@@ -1,14 +1,15 @@
+import 'package:simuladorprocessos/models/coordinates.dart';
 import 'package:simuladorprocessos/models/process.dart';
 import 'package:simuladorprocessos/state.dart';
 import 'package:simuladorprocessos/utils/extensions.dart';
 
 class RR {
-  static Map<String, dynamic> calculate() {
+  static Map<String, ProcessTimes> calculate() {
     final AppState appState = AppState();
 
     final int quantum = appState.systemQuantum;
 
-    Map<String, dynamic> coordinates = {};
+    Map<String, ProcessTimes> times = {};
 
     List<Process> processes = []..addAll(appState.process);
 
@@ -39,6 +40,23 @@ class RR {
       Process process = avaliableProcesses.first;
       for (int i = 1; i <= quantum; i++) {
         time++;
+
+        avaliableProcesses =
+            processes.where((p) => (p.arriveTime! <= time)).toList();
+
+        avaliableProcesses.sort((b, a) {
+          var processA = a.deadline ?? 0;
+          var processB = b.deadline ?? 0;
+          return processB.compareTo(processA);
+        });
+
+        times = ProcessTimes.updateWaiting(
+          avaliableProcesses: avaliableProcesses,
+          times: times,
+          executing: process,
+          time: (time == 1) ? time - 1 : time,
+        );
+
         int remainExecution = (process.executionTime ?? 0) - 1;
         int untilDeadline = (process.deadline ?? 0) - 1;
 
@@ -58,6 +76,14 @@ class RR {
         if (i != quantum) continue;
 
         if (remainExecution != 0) {
+          times = ProcessTimes.updateWaitingWithOverload(
+            avaliableProcesses: avaliableProcesses,
+            times: times,
+            executing: process,
+            time: time,
+            isOverloadTime: true,
+          );
+
           time++;
 
           avaliableProcesses.removeWhere((p) => p.id == process.id);
@@ -68,6 +94,6 @@ class RR {
     }
 
     appState.updateTurnAround(turnAroundRR: turnaround);
-    return coordinates;
+    return times;
   }
 }
