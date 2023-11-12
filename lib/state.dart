@@ -33,7 +33,6 @@ class AppState {
     process.add(
       Process(
         newId,
-        arriveTime: arriveTime,
         executionTime: executionTime,
         deadline: deadline,
         priority: priority,
@@ -50,8 +49,12 @@ class AppState {
     int? deadline,
     int? priority,
   }) {
-    var updatedProcess =
-        process.firstWhere((element) => element.id == id).copy();
+    var updatedProcess = process.firstWhere((element) => element.id == id).copy(
+          arriveTime: arriveTime,
+          executionTime: executionTime,
+          deadline: deadline,
+          priority: priority,
+        );
 
     process.replaceWhere(
       updatedProcess,

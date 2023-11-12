@@ -21,6 +21,32 @@ class _ProcessCardState extends State<ProcessCard> {
 
   String get processId => widget.process.id.toString().padLeft(2, '0');
 
+  TextEditingController arriveTimeController = TextEditingController();
+  TextEditingController executionTimeController = TextEditingController();
+  TextEditingController deadlineController = TextEditingController();
+  TextEditingController priorityController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+
+    arriveTimeController.text = (widget.process.arriveTime ?? '').toString();
+    executionTimeController.text =
+        (widget.process.executionTime ?? '').toString();
+    deadlineController.text = (widget.process.deadline ?? '').toString();
+    priorityController.text = (widget.process.priority ?? '').toString();
+  }
+
+  void updateProcessData() {
+    appState.updateProcess(
+      widget.process.id,
+      arriveTime: int.tryParse(arriveTimeController.text),
+      executionTime: int.tryParse(executionTimeController.text),
+      deadline: int.tryParse(deadlineController.text),
+      priority: int.tryParse(priorityController.text),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -35,16 +61,16 @@ class _ProcessCardState extends State<ProcessCard> {
       child: Column(
         children: [
           header(),
-          field('Tempo de chegada'),
-          field('Tempo de execução'),
-          field('Deadline'),
-          field('Prioridade'),
+          field('Tempo de chegada', arriveTimeController),
+          field('Tempo de execução', executionTimeController),
+          field('Deadline', deadlineController),
+          field('Prioridade', priorityController),
         ],
       ),
     );
   }
 
-  header() {
+  Widget header() {
     return Container(
       height: 40,
       child: Row(
@@ -57,7 +83,7 @@ class _ProcessCardState extends State<ProcessCard> {
     );
   }
 
-  iconButton() {
+  Widget iconButton() {
     return InkWell(
       child: Icon(Icons.delete),
       onTap: () {
@@ -70,7 +96,10 @@ class _ProcessCardState extends State<ProcessCard> {
     );
   }
 
-  Widget field(String label) {
+  Widget field(
+    String label,
+    TextEditingController controller,
+  ) {
     return Theme(
       data: new ThemeData(
         primaryColor: Colors.redAccent,
@@ -81,6 +110,8 @@ class _ProcessCardState extends State<ProcessCard> {
         height: 50,
         padding: EdgeInsets.all(5),
         child: TextField(
+          controller: controller,
+          onChanged: (value) => updateProcessData(),
           decoration: InputDecoration(
             enabledBorder: OutlineInputBorder(
               borderSide: BorderSide(color: Colors.black),
