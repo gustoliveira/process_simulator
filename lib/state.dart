@@ -1,4 +1,6 @@
 // AppState singleton
+import 'package:simuladorprocessos/utils/extensions.dart';
+
 import 'models/process.dart';
 
 class AppState {
@@ -14,11 +16,6 @@ class AppState {
   int? get _lastProcessId => process.lastOrNull?.id;
 
   int get processCounter => process.length;
-
-  List<Process> addProcess(Process newProcess) {
-    process.add(newProcess);
-    return process;
-  }
 
   List<Process> removeProcess(int processId) {
     process.removeWhere((element) => element.id == processId);
@@ -45,4 +42,34 @@ class AppState {
 
     return process;
   }
+
+  List<Process> updateProcess(
+    int id, {
+    int? arriveTime,
+    int? executionTime,
+    int? deadline,
+    int? priority,
+  }) {
+    var updatedProcess =
+        process.firstWhere((element) => element.id == id).copy();
+
+    process.replaceWhere(
+      updatedProcess,
+      (element) => element.id == id,
+    );
+
+    return process;
+  }
+
+  List<Process> wrongProcess() {
+    List<Process> wrongProcess = [];
+
+    process.forEach((element) {
+      if (!(element.correctProcess())) wrongProcess.add(element);
+    });
+
+    return wrongProcess;
+  }
+
+  bool allChecked() => wrongProcess().isEmpty;
 }

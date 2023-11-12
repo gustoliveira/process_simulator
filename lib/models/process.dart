@@ -1,16 +1,37 @@
 class Process {
-  int id;
+  final int id;
+  final int? arriveTime;
+  final int? executionTime;
+  final int? deadline;
+  final int? priority;
 
-  int? arriveTime;
-  int? executionTime;
-  int? deadline;
-  int? priority;
-
-  Process(
+  const Process(
     this.id, {
     this.arriveTime = 0,
     this.executionTime,
     this.deadline,
     this.priority,
   });
+
+  Process copy({
+    int? arriveTime,
+    int? executionTime,
+    int? deadline,
+    int? priority,
+  }) {
+    return Process(
+      this.id,
+      arriveTime: arriveTime ?? this.arriveTime,
+      executionTime: executionTime ?? this.executionTime,
+      deadline: deadline ?? this.deadline,
+      priority: priority ?? this.priority,
+    );
+  }
+
+  bool correctProcess() {
+    return arriveTime != null &&
+        executionTime != null &&
+        deadline != null &&
+        priority != null;
+  }
 }
