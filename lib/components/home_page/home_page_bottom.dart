@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:simuladorprocessos/models/earliest_deadline_first.dart';
 import 'package:simuladorprocessos/models/fifo.dart';
+import 'package:simuladorprocessos/models/round_robin.dart';
 import 'package:simuladorprocessos/models/shortest_job_first.dart';
 
 class HomePageBottom extends StatefulWidget {
@@ -65,6 +66,7 @@ class _HomePageBottomState extends State<HomePageBottom> {
             Fifo.calculate();
             SJF.calculate();
             EDF.calculate();
+            RR.calculate();
 
             print('Called escalation $label');
           },
