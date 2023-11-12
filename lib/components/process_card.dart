@@ -63,8 +63,8 @@ class _ProcessCardState extends State<ProcessCard> {
       onTap: () {
         setState(() {
           widget.removeProcessCallback.call(widget.process.id);
-          // appState.removeProcess(widget.process.id);
-          print('Process deleted');
+          print(
+              "Process '${widget.process.id.toString().padLeft(2, '0')}' deleted");
         });
       },
     );
