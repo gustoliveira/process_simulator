@@ -93,7 +93,7 @@ class _HomePageHeaderState extends State<HomePageHeader> {
       child: TextField(
         controller: quantumController,
         onChanged: (value) {
-          appState.updateQuantum(int.parse(value));
+          appState.updateQuantum(int.tryParse(value) ?? 1);
         },
         decoration: InputDecoration(
           enabledBorder: OutlineInputBorder(
