@@ -31,7 +31,7 @@ class AppState {
     ),
     Process(
       4,
-      arriveTime: 9,
+      arriveTime: 6,
       executionTime: 3,
       deadline: 10,
     ),

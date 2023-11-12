@@ -1,11 +1,12 @@
+import 'package:simuladorprocessos/models/coordinates.dart';
 import 'package:simuladorprocessos/models/process.dart';
 import 'package:simuladorprocessos/state.dart';
 
 class SJF {
-  static Map<String, dynamic> calculate() {
+  static Map<String, ProcessTimes> calculate() {
     final AppState appState = AppState();
 
-    Map<String, dynamic> coordinates = {};
+    Map<String, ProcessTimes> times = {};
 
     List<Process> processes = []..addAll(appState.process);
 
@@ -38,7 +39,24 @@ class SJF {
       }
 
       Process process = avaliableProcesses.first;
+
       while (true) {
+        avaliableProcesses =
+            processes.where((p) => (p.arriveTime! <= time)).toList();
+
+        avaliableProcesses.sort((b, a) {
+          var processA = a.executionTime ?? 0;
+          var processB = b.executionTime ?? 0;
+          return processB.compareTo(processA);
+        });
+
+        times = ProcessTimes.updateWaiting(
+          avaliableProcesses: avaliableProcesses,
+          times: times,
+          executing: process,
+          time: time,
+        );
+
         int remainExecution = (process.executionTime ?? 0) - 1;
         process = process.copy(executionTime: remainExecution);
 
@@ -60,6 +78,6 @@ class SJF {
     }
 
     appState.updateTurnAround(turnAroundSJF: turnaround);
-    return coordinates;
+    return times;
   }
 }
