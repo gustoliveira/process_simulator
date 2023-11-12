@@ -1,4 +1,4 @@
-import 'package:simuladorprocessos/models/coordinates.dart';
+import 'package:simuladorprocessos/models/process_times.dart';
 import 'package:simuladorprocessos/models/process.dart';
 import 'package:simuladorprocessos/state.dart';
 
