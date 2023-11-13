@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:simuladorprocessos/models/earliest_deadline_first.dart';
-import 'package:simuladorprocessos/models/fifo.dart';
-import 'package:simuladorprocessos/models/round_robin.dart';
-import 'package:simuladorprocessos/models/shortest_job_first.dart';
+import 'package:simuladorprocessos/models/algorithms/earliest_deadline_first.dart';
+import 'package:simuladorprocessos/models/algorithms/fifo.dart';
+import 'package:simuladorprocessos/models/algorithms/round_robin.dart';
+import 'package:simuladorprocessos/models/algorithms/shortest_job_first.dart';
 import 'package:simuladorprocessos/state.dart';
 
 class HomePageBottom extends StatefulWidget {

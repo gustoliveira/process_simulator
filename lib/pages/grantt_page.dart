@@ -53,7 +53,7 @@ class _GranttChartPageState extends State<GranttChartPage> {
     );
   }
 
-  headerCard(String label) {
+  Widget headerCard(String label) {
     return Container(
       width: 200,
       height: 40,
