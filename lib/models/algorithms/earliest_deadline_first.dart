@@ -43,8 +43,6 @@ class EDF {
 
       Process process = avaliableProcesses.first;
       for (int i = 1; i <= quantum; i++) {
-        time++;
-
         avaliableProcesses =
             processes.where((p) => (p.arriveTime! <= time)).toList();
 
@@ -58,8 +56,10 @@ class EDF {
           avaliableProcesses: avaliableProcesses,
           times: times,
           executing: process,
-          time: (time == 1) ? time - 1 : time,
+          time: time,
         );
+
+        time++;
 
         int remainExecution = (process.executionTime ?? 0) - 1;
         int untilDeadline = (process.deadline ?? 0) - 1;

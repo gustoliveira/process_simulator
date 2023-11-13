@@ -38,9 +38,7 @@ class RR {
       }
 
       Process process = avaliableProcesses.first;
-      for (int i = 1; i <= quantum; i++) {
-        time++;
-
+      for (int i = 0; i < quantum; i++) {
         avaliableProcesses =
             processes.where((p) => (p.arriveTime! <= time)).toList();
 
@@ -54,16 +52,14 @@ class RR {
           avaliableProcesses: avaliableProcesses,
           times: times,
           executing: process,
-          time: (time == 1) ? time - 1 : time,
+          time: time,
         );
+
+        time++;
 
         int remainExecution = (process.executionTime ?? 0) - 1;
-        int untilDeadline = (process.deadline ?? 0) - 1;
 
-        process = process.copy(
-          executionTime: remainExecution,
-          deadline: untilDeadline,
-        );
+        process = process.copy(executionTime: remainExecution);
 
         if (remainExecution == 0) {
           int fromArriveToComplete = time - process.arriveTime!;
@@ -73,7 +69,7 @@ class RR {
           break;
         }
 
-        if (i != quantum) continue;
+        if (i != (quantum - 1)) continue;
 
         if (remainExecution != 0) {
           times = ProcessTimes.updateTimes(
