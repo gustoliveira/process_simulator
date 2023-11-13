@@ -10,9 +10,9 @@ class ProcessTimes {
 
   ProcessTimes(this.process);
 
-  void setDeadline(int time) {
+  void setDeadline() {
     if (process.deadline == null) return;
-    deadline = process.deadline! + time;
+    deadline = (process.deadline! + (process.arriveTime ?? 0)) + 1;
   }
 
   void addWaiting(int time) => waitingTimes.add(time);
@@ -34,7 +34,7 @@ class ProcessTimes {
     if (aux == null) {
       aux = ProcessTimes(executing);
       isOverloadTime ? aux.addOverload(time) : aux.addExecuting(time);
-      aux.setDeadline(time);
+      aux.setDeadline();
       newTimes['${executing.id}'] = aux;
     } else {
       isOverloadTime ? aux.addOverload(time) : aux.addExecuting(time);
@@ -49,7 +49,7 @@ class ProcessTimes {
       if (aux == null) {
         aux = ProcessTimes(process);
         aux.addWaiting(time);
-        aux.setDeadline(time);
+        aux.setDeadline();
         newTimes['${process.id}'] = aux;
         return;
       }
