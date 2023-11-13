@@ -156,7 +156,7 @@ class _GranttChartPageState extends State<GranttChartPage> {
   }
 
   labels() {
-    List<Widget> rows = [SizedBox(height: 20)];
+    List<Widget> rows = [SizedBox(height: 25)];
 
     calculateCoordinates.values.forEach((element) {
       rows.add(label(element));
@@ -174,27 +174,24 @@ class _GranttChartPageState extends State<GranttChartPage> {
     for (int i = 0; i <= 100; i++) {
       rows.add(Container(
         height: 20,
-        // color: Colors.red,
         width: 24,
         margin: EdgeInsets.only(right: 26),
         child: Center(child: Text(i.toString())),
       ));
     }
 
-    return Row(
-      // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: rows,
-    );
+    return Row(children: rows);
   }
 
   Widget label(ProcessTimes processTimes) {
     return Container(
       width: 120,
-      height: 100,
+      height: 90,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         border: Border.all(color: Colors.black),
       ),
+      margin: EdgeInsets.only(bottom: 10),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -303,9 +300,7 @@ class _GranttChartPageState extends State<GranttChartPage> {
       height: 70,
       child: Stack(
         children: [
-          Center(
-            child: Text('SIMULADOR DE PROCESSOS'),
-          ),
+          Center(child: Text('SIMULADOR DE PROCESSOS')),
           backButton(),
         ],
       ),
@@ -318,14 +313,10 @@ class _GranttChartPageState extends State<GranttChartPage> {
       child: Align(
         alignment: Alignment.centerLeft,
         child: InkWell(
-          child: Icon(
-            Icons.arrow_back,
-            size: 25,
-          ),
+          child: Icon(Icons.arrow_back, size: 25),
           onTap: () {
             Navigator.pop(context);
             calculateCoordinates.clear();
-            print('BACK TO HOME PAGE');
           },
         ),
       ),
