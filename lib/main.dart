@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:simuladorprocessos/pages/grantt_page.dart';
 import 'package:simuladorprocessos/pages/home_page.dart';
 
 void main() {
@@ -13,8 +12,7 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       home: Scaffold(
-        body: GranttChartPage(),
-        // body: HomePage(),
+        body: HomePage(),
       ),
     );
   }

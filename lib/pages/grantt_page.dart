@@ -1,11 +1,17 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:simuladorprocessos/models/fifo.dart';
+import 'package:simuladorprocessos/models/algorithms/algorithms.dart';
+import 'package:simuladorprocessos/models/algorithms/earliest_deadline_first.dart';
+import 'package:simuladorprocessos/models/algorithms/fifo.dart';
+import 'package:simuladorprocessos/models/algorithms/round_robin.dart';
+import 'package:simuladorprocessos/models/algorithms/shortest_job_first.dart';
 import 'package:simuladorprocessos/models/process_times.dart';
 import 'package:simuladorprocessos/state.dart';
 
 class GranttChartPage extends StatefulWidget {
-  const GranttChartPage({super.key});
+  final Algorithms algorithms;
+
+  const GranttChartPage(this.algorithms, {super.key});
 
   @override
   State<GranttChartPage> createState() => _GranttChartPageState();
@@ -16,20 +22,63 @@ class _GranttChartPageState extends State<GranttChartPage> {
 
   final ScrollController _controller = ScrollController();
 
+  late Map<String, ProcessTimes> calculateCoordinates;
+  late String stringTitle;
+  late int turnAroundTotal;
+  late double turnAroundAverage;
+
   @override
   void initState() {
     super.initState();
+
+    switch (widget.algorithms) {
+      case Algorithms.FIFO:
+        calculateCoordinates = Fifo.calculate();
+        turnAroundTotal = appState.turnAroundFIFO;
+        turnAroundAverage = appState.averageTurnAroundFIFO;
+        stringTitle = 'FIFO';
+        break;
+
+      case Algorithms.SJF:
+        calculateCoordinates = SJF.calculate();
+        turnAroundTotal = appState.turnAroundSJF;
+        turnAroundAverage = appState.averageTurnAroundSJF;
+        stringTitle = 'SJF';
+        break;
+
+      case Algorithms.EDF:
+        calculateCoordinates = EDF.calculate();
+        turnAroundTotal = appState.turnAroundEDF;
+        turnAroundAverage = appState.averageTurnAroundEDF;
+        stringTitle = 'EDF';
+        break;
+
+      case Algorithms.RR:
+        calculateCoordinates = RR.calculate();
+        turnAroundTotal = appState.turnAroundRR;
+        turnAroundAverage = appState.averageTurnAroundRR;
+        stringTitle = 'RR';
+        break;
+    }
+  }
+
+  @override
+  void dispose() {
+    calculateCoordinates.clear();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          header(),
-          Expanded(child: content()),
-        ],
+    return Scaffold(
+      body: Container(
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            header(),
+            Expanded(child: content()),
+          ],
+        ),
       ),
     );
   }
@@ -41,12 +90,12 @@ class _GranttChartPageState extends State<GranttChartPage> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Center(child: Text('FIFO')),
+            Center(child: Text(stringTitle)),
             headerCard(
               'Número de Processos: ${appState.processCounter.toString().padLeft(2, "0")}',
             ),
-            headerCard('Turnaround Total: ${appState.turnAroundFIFO}'),
-            headerCard('Turnaround Médio: ${appState.averageTurnAroundFIFO}'),
+            headerCard('Turnaround Total: ${turnAroundTotal}'),
+            headerCard('Turnaround Médio: ${turnAroundAverage}'),
           ],
         ),
       ],
@@ -107,11 +156,9 @@ class _GranttChartPageState extends State<GranttChartPage> {
   }
 
   labels() {
-    var values = Fifo.calculate().values;
-
     List<Widget> rows = [SizedBox(height: 50)];
 
-    values.forEach((element) {
+    calculateCoordinates.values.forEach((element) {
       rows.add(label(element));
     });
 
@@ -175,11 +222,9 @@ class _GranttChartPageState extends State<GranttChartPage> {
   }
 
   Widget times() {
-    var values = Fifo.calculate().values;
-
     List<Widget> rows = [timeIdentifications()];
 
-    values.forEach((element) {
+    calculateCoordinates.values.forEach((element) {
       rows.add(timesRow(element));
     });
 
@@ -272,7 +317,9 @@ class _GranttChartPageState extends State<GranttChartPage> {
             size: 25,
           ),
           onTap: () {
-            setState(() => print('BACK TO HOME PAGE'));
+            Navigator.pop(context);
+            calculateCoordinates.clear();
+            print('BACK TO HOME PAGE');
           },
         ),
       ),

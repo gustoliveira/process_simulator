@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:simuladorprocessos/models/algorithms/earliest_deadline_first.dart';
-import 'package:simuladorprocessos/models/algorithms/fifo.dart';
-import 'package:simuladorprocessos/models/algorithms/round_robin.dart';
-import 'package:simuladorprocessos/models/algorithms/shortest_job_first.dart';
-import 'package:simuladorprocessos/state.dart';
+import 'package:simuladorprocessos/models/algorithms/algorithms.dart';
+import 'package:simuladorprocessos/pages/grantt_page.dart';
 
 class HomePageBottom extends StatefulWidget {
   const HomePageBottom({super.key});
@@ -44,16 +41,16 @@ class _HomePageBottomState extends State<HomePageBottom> {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          escalationButton('FIFO'),
-          escalationButton('SJF'),
-          escalationButton('EDF'),
-          escalationButton('ROUND ROBIN'),
+          escalationButton('FIFO', Algorithms.FIFO),
+          escalationButton('SJF', Algorithms.SJF),
+          escalationButton('EDF', Algorithms.EDF),
+          escalationButton('ROUND ROBIN', Algorithms.RR),
         ],
       ),
     );
   }
 
-  Widget escalationButton(String label) {
+  Widget escalationButton(String label, Algorithms algorithm) {
     return Center(
       child: Container(
         width: 120,
@@ -64,18 +61,11 @@ class _HomePageBottomState extends State<HomePageBottom> {
         ),
         child: InkWell(
           onTap: () {
-            Fifo.calculate();
-            SJF.calculate();
-            EDF.calculate();
-            RR.calculate();
-
-            AppState appState = AppState();
-            print('FIFO: ${appState.averageTurnAroundFIFO}');
-            print('SJF: ${appState.averageTurnAroundSJF}');
-            print('EDF: ${appState.averageTurnAroundEDF}');
-            print('RR: ${appState.averageTurnAroundRR}');
-
-            print('Called escalation $label');
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => GranttChartPage(algorithm)),
+            );
           },
           child: Center(child: Text(label)),
         ),
