@@ -10,32 +10,7 @@ class AppState {
 
   int systemOverload = 1;
   int systemQuantum = 2;
-  List<Process> process = [
-    Process(
-      1,
-      arriveTime: 0,
-      executionTime: 4,
-      deadline: 7,
-    ),
-    Process(
-      2,
-      arriveTime: 2,
-      executionTime: 2,
-      deadline: 5,
-    ),
-    Process(
-      3,
-      arriveTime: 4,
-      executionTime: 1,
-      deadline: 8,
-    ),
-    Process(
-      4,
-      arriveTime: 6,
-      executionTime: 3,
-      deadline: 10,
-    ),
-  ];
+  List<Process> process = [];
 
   int turnAroundFIFO = 0;
   int turnAroundSJF = 0;

@@ -50,7 +50,6 @@ class _HomePageHeaderState extends State<HomePageHeader> {
       height: 70,
       margin: EdgeInsets.fromLTRB(10, 0, 10, 10),
       decoration: BoxDecoration(
-        color: Colors.red,
         borderRadius: BorderRadius.circular(10),
         border: Border.all(color: Colors.black),
       ),
