@@ -36,28 +36,28 @@ class _GranttChartPageState extends State<GranttChartPage> {
         calculateCoordinates = Fifo.calculate();
         turnAroundTotal = appState.turnAroundFIFO;
         turnAroundAverage = appState.averageTurnAroundFIFO;
-        stringTitle = 'FIFO';
+        stringTitle = 'FIRST IN FIRST OUT';
         break;
 
       case Algorithms.SJF:
         calculateCoordinates = SJF.calculate();
         turnAroundTotal = appState.turnAroundSJF;
         turnAroundAverage = appState.averageTurnAroundSJF;
-        stringTitle = 'SJF';
+        stringTitle = 'SHORTEST JOB FIRST';
         break;
 
       case Algorithms.EDF:
         calculateCoordinates = EDF.calculate();
         turnAroundTotal = appState.turnAroundEDF;
         turnAroundAverage = appState.averageTurnAroundEDF;
-        stringTitle = 'EDF';
+        stringTitle = 'EARLIST DEADLINE FIRST';
         break;
 
       case Algorithms.RR:
         calculateCoordinates = RR.calculate();
         turnAroundTotal = appState.turnAroundRR;
         turnAroundAverage = appState.averageTurnAroundRR;
-        stringTitle = 'RR';
+        stringTitle = 'ROUND ROBIN';
         break;
     }
   }
@@ -119,7 +119,7 @@ class _GranttChartPageState extends State<GranttChartPage> {
 
   Widget content() {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
       child: Row(
         children: [
           labels(),
@@ -156,7 +156,7 @@ class _GranttChartPageState extends State<GranttChartPage> {
   }
 
   labels() {
-    List<Widget> rows = [SizedBox(height: 50)];
+    List<Widget> rows = [SizedBox(height: 20)];
 
     calculateCoordinates.values.forEach((element) {
       rows.add(label(element));
@@ -171,15 +171,20 @@ class _GranttChartPageState extends State<GranttChartPage> {
   Widget timeIdentifications() {
     List<Widget> rows = [];
 
-    for (int i = 1; i <= 100; i++) {
+    for (int i = 0; i <= 100; i++) {
       rows.add(Container(
-        height: 50,
-        width: 50,
+        height: 20,
+        // color: Colors.red,
+        width: 24,
+        margin: EdgeInsets.only(right: 26),
         child: Center(child: Text(i.toString())),
       ));
     }
 
-    return Row(children: rows);
+    return Row(
+      // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: rows,
+    );
   }
 
   Widget label(ProcessTimes processTimes) {
@@ -236,6 +241,7 @@ class _GranttChartPageState extends State<GranttChartPage> {
 
   Widget timesRow(ProcessTimes processTimes) {
     return Container(
+      padding: EdgeInsets.only(left: 12),
       child: Row(children: createSquare(processTimes)),
     );
   }
