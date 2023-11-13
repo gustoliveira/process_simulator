@@ -2,7 +2,9 @@
 
 Requisito de avaliação da disciplina de Sistemas Operacionais MATA58 2023.2.
 
-Feito por Gustavo de Oliveira Ferreira
+Feito por Gustavo de Oliveira Ferreira.
+
+Código emm versões mais atualizadas disponível em https://github.com/gustoliveira/sistemas_operacionais_MATA58
 
 ## Setup
 
