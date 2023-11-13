@@ -9,7 +9,7 @@ class AppState {
   factory AppState() => _instance;
 
   int systemOverload = 1;
-  int systemQuantum = 2;
+  int systemQuantum = 1;
   List<Process> process = [];
 
   int turnAroundFIFO = 0;
