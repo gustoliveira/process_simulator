@@ -11,7 +11,7 @@ class EDF {
 
     Map<String, ProcessTimes> times = {};
 
-    List<Process> processes = []..addAll(appState.process);
+    List<Process> processes = []..addAll(appState.validProcesses());
 
     List<Process> avaliableProcesses = [];
 
