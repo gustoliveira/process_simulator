@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:simuladorprocessos/models/algorithms/algorithms.dart';
 import 'package:simuladorprocessos/pages/grantt_page.dart';
+import 'package:simuladorprocessos/state.dart';
+import 'package:toastification/toastification.dart';
 
 class HomePageBottom extends StatefulWidget {
   const HomePageBottom({super.key});
@@ -10,6 +12,8 @@ class HomePageBottom extends StatefulWidget {
 }
 
 class _HomePageBottomState extends State<HomePageBottom> {
+  AppState appState = AppState();
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -50,6 +54,26 @@ class _HomePageBottomState extends State<HomePageBottom> {
     );
   }
 
+  void onTapEscalationButton(Algorithms algorithm) {
+    if (appState.containsValidProcesses()) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (_) => GranttChartPage(algorithm)),
+      );
+      return;
+    }
+
+    toastification.show(
+      context: context,
+      title: Text('Adicione e preencha os processos'),
+      autoCloseDuration: const Duration(seconds: 3),
+      type: ToastificationType.error,
+      style: ToastificationStyle.minimal,
+      alignment: Alignment.bottomCenter,
+      showProgressBar: false,
+    );
+  }
+
   Widget escalationButton(String label, Algorithms algorithm) {
     return Center(
       child: Container(
@@ -60,13 +84,7 @@ class _HomePageBottomState extends State<HomePageBottom> {
           border: Border.all(color: Colors.black),
         ),
         child: InkWell(
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => GranttChartPage(algorithm)),
-            );
-          },
+          onTap: () => onTapEscalationButton(algorithm),
           child: Center(child: Text(label)),
         ),
       ),

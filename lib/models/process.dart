@@ -13,6 +13,8 @@ class Process {
     this.priority,
   });
 
+  bool get isNotEmpty => this.executionTime != null && this.arriveTime != null;
+
   Process copy({
     int? arriveTime,
     int? executionTime,

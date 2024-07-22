@@ -21,6 +21,8 @@ class AppState {
 
   int get processCounter => process.length;
 
+  bool get containsProcesses => process.isNotEmpty;
+
   double get averageTurnAroundFIFO => turnAroundFIFO / (process.length);
   double get averageTurnAroundSJF => turnAroundSJF / (process.length);
   double get averageTurnAroundEDF => turnAroundEDF / (process.length);
@@ -100,4 +102,16 @@ class AppState {
   }
 
   bool allChecked() => wrongProcess().isEmpty;
+
+  List<Process> validProcesses() {
+    List<Process> wrongProcess = [];
+
+    process.forEach((element) {
+      if (element.isNotEmpty) wrongProcess.add(element);
+    });
+
+    return wrongProcess;
+  }
+
+  bool containsValidProcesses() => validProcesses().isNotEmpty;
 }
