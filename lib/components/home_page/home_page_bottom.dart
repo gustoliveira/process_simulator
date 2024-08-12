@@ -32,7 +32,10 @@ class _HomePageBottomState extends State<HomePageBottom> {
       child: Center(
         child: Container(
           padding: EdgeInsets.only(top: 10),
-          child: Text('ALGORITMOS'),
+          child: Text(
+            'ALGORITMOS',
+            style: TextStyle(fontWeight: FontWeight.w600),
+          ),
         ),
       ),
     );

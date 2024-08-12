@@ -90,7 +90,12 @@ class _GranttChartPageState extends State<GranttChartPage> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Center(child: Text(stringTitle)),
+            Center(
+              child: Text(
+                stringTitle,
+                style: TextStyle(fontWeight: FontWeight.w500),
+              ),
+            ),
             headerCard(
               'Número de Processos: ${appState.processCounter.toString().padLeft(2, "0")}',
             ),
@@ -130,6 +135,7 @@ class _GranttChartPageState extends State<GranttChartPage> {
                 dragDevices: {
                   PointerDeviceKind.touch,
                   PointerDeviceKind.mouse,
+                  PointerDeviceKind.trackpad,
                   PointerDeviceKind.stylus,
                   PointerDeviceKind.unknown,
                 },
@@ -213,13 +219,21 @@ class _GranttChartPageState extends State<GranttChartPage> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Text('Execução: ${processTimes.process.executionTime}'),
-                  Text('Deadline: ${processTimes.process.deadline}'),
+                  deadlineLabel(processTimes.process.deadline)
                 ],
               ),
             ),
           ),
         ],
       ),
+    );
+  }
+
+  Widget deadlineLabel(int? deadline) {
+    String message = '';
+    return Tooltip(
+      child: Text('Deadline: $deadline'),
+      message: message,
     );
   }
 
@@ -248,33 +262,21 @@ class _GranttChartPageState extends State<GranttChartPage> {
 
     for (int i = 0; i < 100; i++) {
       if (processTimes.executingTimes.contains(i)) {
-        squares.add(square(
-          Colors.green,
-          (i + 1) == processTimes.deadline,
-        ));
+        squares.add(square(Colors.green, (i + 2) == processTimes.deadline));
         continue;
       }
 
       if (processTimes.waitingTimes.contains(i)) {
-        squares.add(square(
-          Colors.yellow,
-          (i + 1) == processTimes.deadline,
-        ));
+        squares.add(square(Colors.yellow, (i + 2) == processTimes.deadline));
         continue;
       }
 
       if (processTimes.overloadTimes.contains(i)) {
-        squares.add(square(
-          Colors.red,
-          (i + 1) == processTimes.deadline,
-        ));
+        squares.add(square(Colors.red, (i + 2) == processTimes.deadline));
         continue;
       }
 
-      squares.add(square(
-        Colors.white,
-        (i + 1) == processTimes.deadline,
-      ));
+      squares.add(square(Colors.white, (i + 2) == processTimes.deadline));
     }
 
     return squares;
@@ -290,7 +292,10 @@ class _GranttChartPageState extends State<GranttChartPage> {
       width: 50,
       child: Visibility(
         visible: isDeadline,
-        child: Center(child: Text('X')),
+        child: Tooltip(
+          child: Center(child: Text('X')),
+          message: 'Deadline deste processo',
+        ),
       ),
     );
   }
@@ -300,7 +305,12 @@ class _GranttChartPageState extends State<GranttChartPage> {
       height: 70,
       child: Stack(
         children: [
-          Center(child: Text('SIMULADOR DE PROCESSOS')),
+          Center(
+            child: Text(
+              'SIMULADOR DE PROCESSOS',
+              style: TextStyle(fontWeight: FontWeight.w500),
+            ),
+          ),
           backButton(),
         ],
       ),

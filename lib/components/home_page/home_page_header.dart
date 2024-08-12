@@ -40,7 +40,10 @@ class _HomePageHeaderState extends State<HomePageHeader> {
   Widget title() {
     return Expanded(
       child: Center(
-        child: Text('SIMULADOR DE PROCESSOS'),
+        child: Text(
+          'SIMULADOR DE PROCESSOS',
+          style: TextStyle(fontWeight: FontWeight.w600),
+        ),
       ),
     );
   }
