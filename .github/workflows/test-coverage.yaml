@@ -2,7 +2,7 @@ name: Code Coverage Check
 
 on:
   push:
-    branches: [ main ]
+    branches: [ master ]
 
 jobs:
   test-coverage:
