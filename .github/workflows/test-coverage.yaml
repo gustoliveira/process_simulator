@@ -8,18 +8,25 @@ jobs:
   test-coverage:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v3
+
     - name: Install Flutter
-      uses: subosito/flutter-action@v1.3.2
+      uses: subosito/flutter-action@v2
+      with:
+        channel: 'stable'
+
     - name: Install app dependencies
       run: flutter pub global activate dart_dot_reporter_cpy && flutter pub get
+
     - name: Test app
       run: flutter test --machine --coverage | tee tests.json && flutter pub global run dart_dot_reporter_cpy tests.json --show-message
+
     - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v1
+      uses: codecov/codecov-action@v5
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
         file: coverage/lcov.info
+
     - name: Check coverage
       run: genhtml coverage/lcov.info -o coverage/html | grep -E -o "[0-9]{1,2}.*%" | tee coverage.txt && grep -E "9[3-9]|100" coverage.txt
 
