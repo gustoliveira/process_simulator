@@ -16,7 +16,7 @@ jobs:
         channel: 'stable'
 
     - name: Install app dependencies
-      run: flutter pub global activate dart_dot_reporter_cpy && flutter pub get
+      run: sudo apt update && sudo apt install lcov -y && flutter pub global activate dart_dot_reporter_cpy && flutter pub get
 
     - name: Test app
       run: flutter test --machine --coverage | tee tests.json && flutter pub global run dart_dot_reporter_cpy tests.json --show-message
